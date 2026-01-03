@@ -1,6 +1,6 @@
 # Todo App
 
-A console-based todo application with in-memory storage built using clean architecture principles.
+A professional console-based todo application with in-memory storage built using clean architecture principles.
 
 ## Features
 
@@ -9,6 +9,7 @@ A console-based todo application with in-memory storage built using clean archit
 - Update existing todos
 - Delete todos
 - Mark todos as complete/incomplete
+- Professional, user-friendly interface with clear menus and formatting
 
 ## Installation
 
@@ -38,6 +39,14 @@ todo-app
 - `complete id` - Mark/unmark a todo as complete
 - `help` - Show available commands
 - `exit` - Exit the application
+
+## UI Features
+
+- Professional header with clear branding
+- Well-formatted menus with box borders
+- Proper spacing and alignment
+- Clear prompts and feedback
+- Enhanced todo list display with headers
 
 ## Architecture
 

@@ -33,19 +33,24 @@ class TodoAppCLI:
         )
 
     def run(self):
-        print("Todo App - Type 'help' for commands or 'exit' to quit")
+        print("=" * 50)
+        print("           TODO APPLICATION")
+        print("=" * 50)
+        print("Welcome! Manage your tasks efficiently.")
+        print("Type 'help' for available commands or 'exit' to quit.\n")
 
         while True:
             try:
-                command_input = input("Todo App> ").strip()
+                command_input = input(">>> ").strip()
                 if not command_input:
+                    print()  # Add empty line for better spacing
                     continue
 
                 parts = command_input.split()
                 command = parts[0].lower()
 
                 if command == 'exit':
-                    print("Goodbye!")
+                    print("\nThank you for using Todo App. Goodbye!")
                     break
                 elif command == 'help':
                     self.show_help()
@@ -60,89 +65,100 @@ class TodoAppCLI:
                 elif command == 'complete':
                     self.handle_complete(parts[1:])
                 else:
-                    print(f"Unknown command: {command}. Type 'help' for available commands.")
+                    print(f"\nUnknown command: '{command}'. Type 'help' for available commands.\n")
             except KeyboardInterrupt:
-                print("\nGoodbye!")
+                print("\n\nThank you for using Todo App. Goodbye!")
                 break
             except Exception as e:
-                print(f"Error: {e}")
+                print(f"\nError: {e}\n")
 
     def show_help(self):
         help_text = """
-Available commands:
-  add "title" ["description"]    - Add a new todo
-  list                          - List all todos
-  update id "title" ["description"] - Update a todo
-  delete id                     - Delete a todo
-  complete id                   - Mark/unmark a todo as complete
-  help                          - Show this help
-  exit                          - Exit the application
+╔══════════════════════════════════════════════════════════════╗
+║                           HELP                             ║
+╠══════════════════════════════════════════════════════════════╣
+║  Commands:                                                 ║
+║    add \"title\" [\"description\"]  - Add a new todo           ║
+║    list                         - List all todos           ║
+║    update id \"title\" [\"description\"] - Update a todo      ║
+║    delete id                    - Delete a todo            ║
+║    complete id                  - Mark/unmark as complete  ║
+║    help                         - Show this help           ║
+║    exit                         - Exit the application     ║
+╚══════════════════════════════════════════════════════════════╝
         """
-        print(help_text.strip())
+        print(help_text)
 
     def handle_add(self, args: List[str]):
         if len(args) < 1:
-            print("Usage: add \"title\" [\"description\"]")
+            print("\nUsage: add \"title\" [\"description\"]\n")
             return
 
         title = args[0].strip('"')
         description = args[1].strip('"') if len(args) > 1 else None
 
         result = self.commands.add_todo(title, description)
-        print(result)
+        print(f"\n{result}\n")
 
     def handle_list(self, args: List[str]):
         if len(args) > 0:
-            print("Usage: list")
+            print("\nUsage: list\n")
             return
 
         result = self.commands.list_todos()
-        print(result)
+        if result == "No todos found.":
+            print(f"\n{result}\n")
+        else:
+            print(f"\n{'='*60}")
+            print("YOUR TODOS")
+            print('='*60)
+            print(result)
+            print('='*60 + "\n")
 
     def handle_update(self, args: List[str]):
         if len(args) < 2:
-            print("Usage: update id \"title\" [\"description\"]")
+            print("\nUsage: update id \"title\" [\"description\"]\n")
             return
 
         try:
             todo_id = int(args[0])
         except ValueError:
-            print("Error: ID must be a number")
+            print("\nError: ID must be a number\n")
             return
 
         title = args[1].strip('"')
         description = args[2].strip('"') if len(args) > 2 else None
 
         result = self.commands.update_todo(todo_id, title, description)
-        print(result)
+        print(f"\n{result}\n")
 
     def handle_delete(self, args: List[str]):
         if len(args) != 1:
-            print("Usage: delete id")
+            print("\nUsage: delete id\n")
             return
 
         try:
             todo_id = int(args[0])
         except ValueError:
-            print("Error: ID must be a number")
+            print("\nError: ID must be a number\n")
             return
 
         result = self.commands.delete_todo(todo_id)
-        print(result)
+        print(f"\n{result}\n")
 
     def handle_complete(self, args: List[str]):
         if len(args) != 1:
-            print("Usage: complete id")
+            print("\nUsage: complete id\n")
             return
 
         try:
             todo_id = int(args[0])
         except ValueError:
-            print("Error: ID must be a number")
+            print("\nError: ID must be a number\n")
             return
 
         result = self.commands.complete_todo(todo_id)
-        print(result)
+        print(f"\n{result}\n")
 
 
 def main():

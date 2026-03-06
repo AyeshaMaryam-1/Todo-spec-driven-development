@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== CSS Variables for Theming ===== */
+:root {
+  /* Light mode colors */
+  --background: 255 255 255;
+  --foreground: 15 23 42;
+  --muted: 241 245 249;
+  --muted-foreground: 100 116 139;
+  --border: 226 232 240;
+  --primary: 59 130 246;
+  --primary-foreground: 255 255 255;
+  --secondary: 241 245 249;
+  --secondary-foreground: 15 23 42;
+  --accent: 236 72 153;
+  --accent-foreground: 255 255 255;
+  --card: 255 255 255;
+  --card-foreground: 15 23 42;
+  --gradient-from: 59 130 246;
+  --gradient-via: 147 51 234;
+  --gradient-to: 236 72 153;
+}
+
+.dark {
+  /* Dark mode colors */
+  --background: 2 6 23;
+  --foreground: 248 250 252;
+  --muted: 30 41 59;
+  --muted-foreground: 148 163 184;
+  --border: 30 41 59;
+  --primary: 96 165 250;
+  --primary-foreground: 2 6 23;
+  --secondary: 30 41 59;
+  --secondary-foreground: 248 250 252;
+  --accent: 244 114 182;
+  --accent-foreground: 2 6 23;
+  --card: 15 23 42;
+  --card-foreground: 248 250 252;
+  --gradient-from: 96 165 250;
+  --gradient-via: 167 139 250;
+  --gradient-to: 244 114 182;
+}
+
+/* ===== Base Styles ===== */
+* {
+  border-color: rgb(var(--border));
+}
+
+body {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* ===== Custom Utilities ===== */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-text {
+    background: linear-gradient(
+      to right,
+      rgb(var(--gradient-from)),
+      rgb(var(--gradient-via)),
+      rgb(var(--gradient-to))
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(
+      135deg,
+      rgb(var(--gradient-from)),
+      rgb(var(--gradient-via)),
+      rgb(var(--gradient-to))
+    );
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .dark .glass {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* ===== Component Styles ===== */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-transparent 
+           text-base font-medium rounded-lg shadow-sm text-white 
+           bg-blue-600 hover:bg-blue-700 
+           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+           transition-all duration-200 ease-in-out
+           hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 border 
+           text-base font-medium rounded-lg 
+           text-gray-700 bg-white border-gray-300 
+           hover:bg-gray-50 
+           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+           transition-all duration-200 ease-in-out
+           hover:shadow-md hover:-translate-y-0.5;
+  }
+
+  .dark .btn-secondary {
+    @apply text-gray-200 bg-gray-800 border-gray-700 hover:bg-gray-700;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-6 py-3 border-2 
+           text-base font-medium rounded-lg 
+           text-blue-600 border-blue-600 
+           hover:bg-blue-50 
+           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+           transition-all duration-200 ease-in-out
+           hover:shadow-md hover:-translate-y-0.5;
+  }
+
+  .dark .btn-outline {
+    @apply text-blue-400 border-blue-400 hover:bg-blue-950;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden
+           transition-all duration-300 ease-in-out
+           hover:shadow-xl hover:-translate-y-1;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl;
+  }
+
+  .section-subtitle {
+    @apply text-lg md:text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto;
+  }
+}
+
+/* ===== Animations ===== */
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out 3s infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+}

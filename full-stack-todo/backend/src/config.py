@@ -18,6 +18,9 @@ class Settings:
     JWT_SECRET: str = os.getenv("JWT_SECRET", "")
     JWT_ALGORITHM: str = os.getenv("JWT_ALGORITHM", "HS256")
 
+    # CORS Configuration
+    CORS_ORIGINS: str = os.getenv("CORS_ORIGINS", "")
+
     # Environment
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
 

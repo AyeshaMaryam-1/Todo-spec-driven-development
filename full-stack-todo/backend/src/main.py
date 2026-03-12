@@ -7,6 +7,8 @@ from datetime import datetime
 import logging
 import time
 
+from .config import settings
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -19,9 +21,14 @@ app = FastAPI(
 )
 
 # Configure CORS middleware for frontend integration
+# In production, replace with your actual domain(s)
+cors_origins = settings.CORS_ORIGINS.split(",") if settings.CORS_ORIGINS else ["http://localhost:3000"]
+
+logger.info(f"CORS allowed origins: {cors_origins}")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Next.js frontend
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -86,7 +93,7 @@ async def general_exception_handler(request: Request, exc: Exception):
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={
-            "detail": "Internal server error",
+            "detail": f"Internal server error: {str(exc)}",
             "status_code": 500,
             "timestamp": datetime.utcnow().isoformat() + "Z"
         }
